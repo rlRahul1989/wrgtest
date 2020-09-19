@@ -1,0 +1,29 @@
+lamp-72_test:
+    image: romeoz/docker-apache-php:7.2
+    ports:
+        - "83:80"
+    volumes:
+        - ./:/var/www/app
+        - ./app.conf:/etc/apache2/sites-enabled/app.conf
+    links:
+        - database_test
+
+database_test:
+    image: mysql
+    ports:
+        - "3309:3306"
+    environment:
+        - MYSQL_ROOT_PASSWORD=test123
+        - MYSQL_USER=root2
+        - MYSQL_PASSWORD=test123
+    # command: --sql_mode="NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
+
+# phpmyadmin:
+#     image: corbinu/docker-phpmyadmin
+#     ports:
+#         - "8081:80"
+#     environment:
+#         - MYSQL_USERNAME=root2
+#         - MYSQL_PASSWORD=test123
+#     links:
+#         - database:mysql

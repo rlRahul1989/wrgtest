@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+{% block title %} Document List {% endblock %}
+{% block body %}
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <div class="sidebar">
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="info">
+                    <a href="#" class="d-block">WRG Test</a>
+                </div>
+            </div>
+            <div class="input-group input-group-sm">
+                {{ form_start(search, {'action': path('document_search'), 'method': 'POST'}) }}
+                    {{ form_widget(search.value, {'attr': {'class': 'form-control form-control-navbar', 'placeholder': "Search"}}) }}
+                    <div class="input-group-append">
+                        <button class="btn btn-default" type="submit">
+                            Search
+                        </button>
+                    </div>
+                {{ form_end(search) }}
+            </div>
+        </div>
+    </aside>
+    <div class="content-wrapper" style="min-height: 1200.88px;">
+        <h1>Document List</h1>
+        <a class="btn btn-primary fa-pull-right" style="margin-bottom: 1%" href="{{ path('document_new') }}">Create Document</a>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Document Name</th>
+                    <th>Document FolderName</th>
+                    <th>CreatedAt</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for document in documents %}
+                <tr>
+                    <td>{{ document.documentName }}</td>
+                    <td>{{ document.folder.folderName }}</td>
+                    <td>{{ document.createdAt ? document.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>
+                        <a href="{{ path('document_show', {'id': document.id}) }}">show</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <a class="btn btn-primary fa-pull-right" href="{{ path('folder_new') }}">Create Folder</a>
+    </div>
+{% endblock %}

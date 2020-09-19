@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Folder index{% endblock %}
+
+{% block body %}
+    <h1>Folder index</h1>
+    <a class="btn btn-primary fa-pull-right" style="margin-bottom: 1%" href="{{ path('folder_new') }}">Create Folder</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>FolderName</th>
+                <th>CreatedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for folder in folders %}
+            <tr>
+                <td>{{ folder.id }}</td>
+                <td>{{ folder.folderName }}</td>
+                <td>{{ folder.createdAt ? folder.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('folder_show', {'id': folder.id}) }}">show</a>
+{#                    <a href="{{ path('folder_edit', {'id': folder.id}) }}">edit</a>#}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a class="btn btn-primary fa-pull-right" href="{{ path('document_new') }}">Create Document</a>
+{% endblock %}
